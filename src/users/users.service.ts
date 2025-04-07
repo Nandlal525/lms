@@ -2,7 +2,7 @@ import { BadGatewayException, BadRequestException, Injectable, NotFoundException
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaClient, User } from '@prisma/client';
-import { hash, hashSync } from 'bcrypt';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class UsersService {
