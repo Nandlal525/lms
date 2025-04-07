@@ -3,12 +3,14 @@ import { PrismaClient } from '@prisma/client';
 import { compare } from 'bcrypt';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { JwtService } from '@nestjs/jwt';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly prisma:PrismaClient,
-        private readonly usersService,
+        private readonly usersService: UsersService,
         private readonly jwtservice:JwtService,
     ){}
     async register(registerDto:RegisterDto){

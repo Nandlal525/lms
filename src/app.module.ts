@@ -6,10 +6,15 @@ import { UsersModule } from './users/users.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { BooksModule } from './books/books.module';
 import { AuthModule } from './auth/auth.module';
-import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [MembersModule, UsersModule, TransactionsModule, BooksModule, AuthModule],
+  imports: [
+    MembersModule,
+    UsersModule,
+    TransactionsModule,
+    BooksModule,
+    AuthModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

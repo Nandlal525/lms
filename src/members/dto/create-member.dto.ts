@@ -1,20 +1,23 @@
-import { IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateMemberDto {
-    @IsNotEmpty()
-    @IsString()
-    name: string;
+  @IsInt()
+  @IsNotEmpty()
+  user_id: number;
 
-    @IsOptional()
-    @IsString()
-    email:string;
+  @IsNotEmpty()
+  @IsString()
+  name: string;
 
-    @IsNotEmpty()
-    @IsString()
-    mobile:string;
+  @IsOptional()
+  @IsString()
+  email: string;
 
-    @IsNotEmpty()
-    @IsString()
-    address:string;
+  @IsNotEmpty()
+  @IsString()
+  mobile: string;
 
+  @IsNotEmpty()
+  @IsString()
+  address: string;
 }
