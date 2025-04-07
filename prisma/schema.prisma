@@ -39,6 +39,7 @@ model Book{
   user User @relation(references: [id],fields: [user_id])
 
   @@map("books")
+
   Transaction Transaction[]
 }
 model User{
