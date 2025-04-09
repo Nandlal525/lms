@@ -18,6 +18,15 @@ export class TransactionsService {
     if((book.quantity as number) <= 0){
       throw new BadRequestException('Book is not available');
     }
+    //check if member exists
+    const member=await this.prisma.member.findUnique({
+      where:{
+        id:createTransactionDto.member_id
+      },
+    });
+    if(!member){
+      throw new NotFoundException('member not found');
+    }
     // check if book is already borrowed
     const existingTransaction = await this.prisma.transaction.findFirst({
       where:{
@@ -46,30 +55,28 @@ export class TransactionsService {
       return transaction;
     });
   }
-  async findAll() {
-    return this.prisma.transaction.findMany();
+  async findAll(user_id:number) {
+    return this.prisma.transaction.findMany({
+      where:{
+        user_id,
+      },
+    });
   }
 
-  async findOne(id: number) {
+  async findOne(id: number, user_id:number) {
     const transaction=await this.prisma.transaction.findUnique({
-      where:{id},
+      where:{id,user_id},
     });
     if(!transaction){
       throw new NotFoundException('Transaction not found');
     }
     return transaction;
   }
-  async update(id: number, updateTransactionDto: UpdateTransactionDto) {
-    await this.findOne(id);
-    return this.prisma.transaction.update({
-      where:{id},
-      data:updateTransactionDto,
-    });
-  }
- async remove(id: number) {
-  await this.findOne(id);
+
+ async remove(id: number,user_id:number) {
+  await this.findOne(id, user_id);
     return this.prisma.transaction.delete({
-      where:{id},
+      where:{id, user_id},
     });
   }
 }
