@@ -1,7 +1,7 @@
 import { MailerService } from "@nestjs-modules/mailer"
-import { Process } from "@nestjs/bull"
-
-export class AuthService{
+import { Process, Processor } from "@nestjs/bull"
+@Processor('auth')
+export class AuthProcessor{
     constructor(private readonly mail: MailerService){}
     @Process('verifyEmailAddress')
     async sendVerificationMail(job: any){

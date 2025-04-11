@@ -5,6 +5,9 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 
 @Injectable()
 export class AuthService {
@@ -12,9 +15,17 @@ export class AuthService {
         private readonly prisma:PrismaClient,
         private readonly usersService: UsersService,
         private readonly jwtservice:JwtService,
+        @InjectQueue('auth') private readonly queue:Queue,
     ){}
     async register(registerDto:RegisterDto){
         const user=await this.usersService.create(registerDto);
+        await this.queue.add('verifyEmailAddress',{
+            data:{
+                from:"test@example.com",
+                to:"test@test.com",
+                otp:123456,
+            },
+        });
         const token=await  this.jwtservice.signAsync(user);
         return{token};
     }
