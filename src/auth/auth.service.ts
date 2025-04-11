@@ -41,4 +41,10 @@ export class AuthService {
         const token=await this.jwtservice.signAsync(user);
         return{token};
     }
+    async profile(user_id:number){
+        return this.usersService.findOne(user_id);
+      }
+      async updateProfile(user_id:number,UpdateProfileDto:UpdateProfileDto){
+        return this.usersService.update(user_id, UpdateProfileDto);
+      }
 }
